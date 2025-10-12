@@ -75,7 +75,7 @@ def protein_concentration(
         help="If True, the edges of the membrane will be excluded from the area calculation.",
     ),
     edge_exclusion_width: float = Option(  # noqa: B008
-        50.0, help="Width of the edge exclusion zone in Anstrom."
+        50.0, help="Width of the edge exclusion zone in Angstrom."
     ),
     edge_percentile: float = Option(  # noqa: B008
         95, help="Percentile to use for edge exclusion."
@@ -133,7 +133,7 @@ def protein_concentration_wrt(
         help="If True, the edges of the membrane will be excluded from the area calculation.",
     ),
     edge_exclusion_width: float = Option(  # noqa: B008
-        50.0, help="Width of the edge exclusion zone in Anstrom."
+        50.0, help="Width of the edge exclusion zone in Angstrom."
     ),
     only_one_side: bool = Option(  # noqa: B008
         False,
@@ -189,6 +189,115 @@ def protein_concentration_wrt(
     )
 
 
+@cli.command(name="protein_concentration_wrt_property", no_args_is_help=True)
+def protein_concentration_wrt_property(
+    in_folder: str = Option(  # noqa: B008
+        ...,
+        help="Path to the directory containing either .h5 files or .obj and .star files",
+        **PKWARGS,
+    ),
+    out_folder: str = Option(  # noqa: B008
+        "./stats/protein_concentration",
+        help="Path to the folder where computed stats should be stored.",
+    ),
+    pixel_size_multiplier: float = Option(  # noqa: B008
+        None,
+        help="Pixel size multiplier if mesh is not scaled in unit Angstrom. If provided, mesh vertices are multiplied by this value.",
+    ),
+    exclude_edges: bool = Option(  # noqa: B008
+        False,
+        help="If True, the edges of the membrane will be excluded from the area calculation.",
+    ),
+    edge_exclusion_width: float = Option(  # noqa: B008
+        50.0, help="Width of the edge exclusion zone in Angstrom."
+    ),
+    only_one_side: bool = Option(  # noqa: B008
+        False,
+        help="If True, only one side of the membrane will be considered for area calculation. Works only if exclude_edges is False.",
+    ),
+    num_bins: int = Option(  # noqa: B008
+        25, help="Number of bins to use for the histogram."
+    ),
+    with_respect_to_property: str = Option(  # noqa: B008
+        "scores", help="Property with respect to which protein concentration should be computed."
+    ),
+):
+    """Compute protein concentrations with respect to distance to a specific point class.
+
+    Example
+    -------
+    membrain_stats protein_concentration_wrt --in-folder <path-to-your-folder> --out-folder <path-to-store-meshes> --consider-classes 0 --num-bins 25 --with-respect-to-class 1
+    """
+
+    from membrain_stats.protein_concentration import (
+        protein_concentration_wrt_property_folder,
+    )
+
+    assert not (
+        only_one_side and exclude_edges
+    ), "Only one of only_one_side and exclude_edges can be True."
+
+    protein_concentration_wrt_property_folder(
+        in_folder=in_folder,
+        out_folder=out_folder,
+        exclude_edges=exclude_edges,
+        edge_exclusion_width=edge_exclusion_width,
+        pixel_size_multiplier=pixel_size_multiplier,
+        only_one_side=only_one_side,
+        with_respect_to_property=with_respect_to_property,
+        num_bins=num_bins,
+    )
+
+
+@cli.command(name="property_from_morphometrics", no_args_is_help=True)
+def property_from_morphometrics(
+    h5_folder: str = Option(  # noqa: B008
+        ...,
+        help="Path to the directory containing either .h5 files or .obj and .star files",
+        **PKWARGS,
+    ),
+    morphometrics_folder: str = Option(  # noqa: B008
+        ...,
+        help="Path to the folder where computed stats should be stored.",
+        **PKWARGS,
+    ),
+    out_folder: str = Option(  # noqa: B008
+        "./stats/predictions_with_morphometrics",
+        help="Path to the folder where computed stats should be stored.",
+    ),
+    pixel_size_multiplier: float = Option(  # noqa: B008
+        1.0,
+        help="Pixel size multiplier for morphometrics coordinates to match membrain-pick coordinates. If provided, morphometrics coordinates are multiplied by this value. By default, membrain-pick outputs and morphometrics are aligned in pixel space (i.e. multiplier=1).",
+    ),
+    max_distance_for_assignment: float = Option(  # noqa: B008
+        50.0,
+        help="Maximum distance in Angstrom for assigning morphometrics to membrane vertices. If the nearest morphometrics point is further away than this distance, no properties will be assigned to the vertex (nan values).",
+    )
+):
+    """Assign morphometrics properties to membrane meshes.
+
+    This is done by assigning the nearest morphometrics point to each membrane vertex.
+    All available per-vertex morphometrics properties are stored in the output .h5 file.
+
+    Example
+    -------
+    membrain_stats property_from_morphometrics --h5-folder <path-to-your-folder> --morphometrics-folder <path-to-morphometrics-folder> --out-folder <path-to-store-meshes> --pixel-size-multiplier 14.08
+    """
+
+    from membrain_stats.property_assignment import (
+        property_from_morphometrics,
+    )
+
+
+    property_from_morphometrics(
+        h5_folder=h5_folder,
+        morphometrics_folder=morphometrics_folder,
+        out_folder=out_folder,
+        pixel_size_multiplier=pixel_size_multiplier,
+        max_distance_for_assignment=max_distance_for_assignment,
+    )
+
+
 @cli.command(name="geodesic_NN", no_args_is_help=True)
 def geodesic_NN(
     in_folder: str = Option(  # noqa: B008
@@ -238,7 +347,7 @@ def geodesic_NN(
         help="If True, the edges of the membrane will be excluded from the nearest neighbor calculation.",
     ),
     edge_exclusion_width: float = Option(  # noqa: B008
-        50.0, help="Width of the edge exclusion zone in Anstrom."
+        50.0, help="Width of the edge exclusion zone in Angstrom."
     ),
     edge_percentile: float = Option(  # noqa: B008
         95, help="Percentile to use for edge exclusion."
@@ -293,7 +402,7 @@ def geodesic_NN_wrt(
         help="If True, the edges of the membrane will be excluded from the area calculation.",
     ),
     edge_exclusion_width: float = Option(  # noqa: B008
-        50.0, help="Width of the edge exclusion zone in Anstrom."
+        50.0, help="Width of the edge exclusion zone in Angstrom."
     ),
     pixel_size_multiplier: float = Option(  # noqa: B008
         None,
@@ -387,7 +496,7 @@ def geodesic_ripley(
     num_bins: int = Option(  # noqa: B008
         50, help="Into how many bins should the ripley statistics be split?"
     ),
-    bin_size: float = Option(None, help="Size of the bins in Anstrom."),  # noqa: B008
+    bin_size: float = Option(None, help="Size of the bins in Angstrom."),  # noqa: B008
     method: str = Option(  # noqa: B008
         "fast",
         help="Method to use for computing geodesic distances. Can be either 'exact' or 'fast'.",
@@ -397,7 +506,7 @@ def geodesic_ripley(
         help="If True, the edges of the membrane will be excluded from the area calculation.",
     ),
     edge_exclusion_width: float = Option(  # noqa: B008
-        50.0, help="Width of the edge exclusion zone in Anstrom."
+        50.0, help="Width of the edge exclusion zone in Angstrom."
     ),
     edge_percentile: float = Option(  # noqa: B008
         95, help="Percentile to use for edge exclusion."

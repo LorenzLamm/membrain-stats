@@ -6,3 +6,6 @@ from membrain_stats.protein_concentration.protein_concentration import (
 from membrain_stats.protein_concentration.protein_concentration_wrt import (
     protein_concentration_wrt_folder,
 )
+from membrain_stats.protein_concentration.protein_concentration_wrt_property import (
+    protein_concentration_wrt_property_folder,
+)

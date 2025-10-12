@@ -1,6 +1,7 @@
 from typing import List, Tuple
 import numpy as np
 import trimesh
+from sklearn.neighbors import NearestNeighbors
 from membrain_stats.utils.mesh_utils import barycentric_area_per_vertex
 from membrain_stats.utils.geodesic_distance_utils import (
     compute_geodesic_distance_matrix,
@@ -135,3 +136,33 @@ def get_wrt_inputs(
     mesh_distances = flatten_and_concatenate(mesh_distances)
 
     return protein_nearest_wrt_distances, mesh_barycentric_areas, mesh_distances
+
+def get_wrt_property_inputs(
+    mesh_dicts: List[dict],
+    meshes: List[trimesh.Trimesh],
+    with_respect_to_property: int,
+) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
+    """Main function to compute protein distances and mesh information."""
+
+    # compute mesh property per point
+    #first: nearest neighbor assignment of properties to mesh points
+    positions = [mesh_dict['positions'] for mesh_dict in mesh_dicts]
+    vertices = [mesh.vertices for mesh in meshes]
+    nn_idcs_per_position = [
+        NearestNeighbors(n_neighbors=1, algorithm='auto').fit(verts).kneighbors(pos)[1].flatten()
+        for pos, verts in zip(positions, vertices)
+    ]
+    property_per_point = [
+        mesh_dict["properties"][with_respect_to_property][nn_idcs]
+        for mesh_dict, nn_idcs in zip(mesh_dicts, nn_idcs_per_position)
+    ]
+
+
+    # Compute the barycentric areas
+    mesh_barycentric_areas = compute_barycentric_areas(meshes)
+    mesh_barycentric_areas = np.concatenate(mesh_barycentric_areas)
+
+    # Flatten and concatenate mesh distances
+    mesh_properties = flatten_and_concatenate([mesh_dict["properties"][with_respect_to_property] for mesh_dict in mesh_dicts])
+
+    return property_per_point, mesh_barycentric_areas, mesh_properties
