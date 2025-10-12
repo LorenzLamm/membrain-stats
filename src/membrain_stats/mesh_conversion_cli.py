@@ -75,7 +75,7 @@ def protein_concentration(
         help="If True, the edges of the membrane will be excluded from the area calculation.",
     ),
     edge_exclusion_width: float = Option(  # noqa: B008
-        50.0, help="Width of the edge exclusion zone in Anstrom."
+        50.0, help="Width of the edge exclusion zone in Angstrom."
     ),
     edge_percentile: float = Option(  # noqa: B008
         95, help="Percentile to use for edge exclusion."
@@ -133,7 +133,7 @@ def protein_concentration_wrt(
         help="If True, the edges of the membrane will be excluded from the area calculation.",
     ),
     edge_exclusion_width: float = Option(  # noqa: B008
-        50.0, help="Width of the edge exclusion zone in Anstrom."
+        50.0, help="Width of the edge exclusion zone in Angstrom."
     ),
     only_one_side: bool = Option(  # noqa: B008
         False,
@@ -209,7 +209,7 @@ def protein_concentration_wrt_property(
         help="If True, the edges of the membrane will be excluded from the area calculation.",
     ),
     edge_exclusion_width: float = Option(  # noqa: B008
-        50.0, help="Width of the edge exclusion zone in Anstrom."
+        50.0, help="Width of the edge exclusion zone in Angstrom."
     ),
     only_one_side: bool = Option(  # noqa: B008
         False,
@@ -267,14 +267,14 @@ def property_from_morphometrics(
     ),
     pixel_size_multiplier: float = Option(  # noqa: B008
         1.0,
-        help="Pixel size multiplier for morphoemtrics coordinates to match membrain-pick coordinates. If provided, morphometrics coordinates are multiplied by this value. By default, membrain-pick outputs and morphometrics are aligned in pixel space (i.e. multiplier=1).",
+        help="Pixel size multiplier for morphometrics coordinates to match membrain-pick coordinates. If provided, morphometrics coordinates are multiplied by this value. By default, membrain-pick outputs and morphometrics are aligned in pixel space (i.e. multiplier=1).",
     ),
     max_distance_for_assignment: float = Option(  # noqa: B008
         50.0,
         help="Maximum distance in Angstrom for assigning morphometrics to membrane vertices. If the nearest morphometrics point is further away than this distance, no properties will be assigned to the vertex (nan values).",
     )
 ):
-    """Assign morphoemtrics properties to membrane meshes.
+    """Assign morphometrics properties to membrane meshes.
 
     This is done by assigning the nearest morphometrics point to each membrane vertex.
     All available per-vertex morphometrics properties are stored in the output .h5 file.
@@ -347,7 +347,7 @@ def geodesic_NN(
         help="If True, the edges of the membrane will be excluded from the nearest neighbor calculation.",
     ),
     edge_exclusion_width: float = Option(  # noqa: B008
-        50.0, help="Width of the edge exclusion zone in Anstrom."
+        50.0, help="Width of the edge exclusion zone in Angstrom."
     ),
     edge_percentile: float = Option(  # noqa: B008
         95, help="Percentile to use for edge exclusion."
@@ -402,7 +402,7 @@ def geodesic_NN_wrt(
         help="If True, the edges of the membrane will be excluded from the area calculation.",
     ),
     edge_exclusion_width: float = Option(  # noqa: B008
-        50.0, help="Width of the edge exclusion zone in Anstrom."
+        50.0, help="Width of the edge exclusion zone in Angstrom."
     ),
     pixel_size_multiplier: float = Option(  # noqa: B008
         None,
@@ -496,7 +496,7 @@ def geodesic_ripley(
     num_bins: int = Option(  # noqa: B008
         50, help="Into how many bins should the ripley statistics be split?"
     ),
-    bin_size: float = Option(None, help="Size of the bins in Anstrom."),  # noqa: B008
+    bin_size: float = Option(None, help="Size of the bins in Angstrom."),  # noqa: B008
     method: str = Option(  # noqa: B008
         "fast",
         help="Method to use for computing geodesic distances. Can be either 'exact' or 'fast'.",
@@ -506,7 +506,7 @@ def geodesic_ripley(
         help="If True, the edges of the membrane will be excluded from the area calculation.",
     ),
     edge_exclusion_width: float = Option(  # noqa: B008
-        50.0, help="Width of the edge exclusion zone in Anstrom."
+        50.0, help="Width of the edge exclusion zone in Angstrom."
     ),
     edge_percentile: float = Option(  # noqa: B008
         95, help="Percentile to use for edge exclusion."

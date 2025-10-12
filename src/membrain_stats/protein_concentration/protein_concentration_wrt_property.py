@@ -45,7 +45,7 @@ def protein_concentration_wrt_property_folder(
     edge_exclusion_width: float = 50.0,
     pixel_size_multiplier: float = None,
     only_one_side: bool = False,
-    with_respect_to_property: float = "scores",
+    with_respect_to_property: str = "scores",
     num_bins: int = 25,
 ):
 
