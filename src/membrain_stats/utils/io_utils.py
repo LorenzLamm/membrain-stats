@@ -43,6 +43,10 @@ def get_mesh_from_file(
         classes = np.zeros(len(positions), dtype=int)
         angles = np.zeros((len(positions), 3))
         hasAngles = False
+        # use all unused keys as properties
+        properties = {
+            key: mesh_data[key] for key in mesh_data.keys() if key not in ["points", "faces", "cluster_centers"]
+        }
     else:
         mesh = trimesh.load_mesh(filename)
         verts = mesh.vertices * pixel_size_multiplier
@@ -63,6 +67,7 @@ def get_mesh_from_file(
             positions[["rlnCoordinateX", "rlnCoordinateY", "rlnCoordinateZ"]].values
             * pixel_size_multiplier_positions
         )
+        properties = {}
     out_dict = {
         "verts": verts,
         "faces": faces,
@@ -70,6 +75,7 @@ def get_mesh_from_file(
         "classes": classes,
         "angles": angles,
         "hasAngles": hasAngles,
+        "properties": properties,
     }
     return out_dict
 

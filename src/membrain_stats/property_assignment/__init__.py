@@ -1,0 +1,2 @@
+
+from membrain_stats.property_assignment.property_from_morphometrics import property_from_morphometrics
