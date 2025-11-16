@@ -25,7 +25,7 @@ Membrain-stats's functionalities are described in more detail in our [preprint](
 ```
 
 ## Usage:
-For more details about how to use MemBrain-stats, refer to our [User Instructions](instructions_overview.md) document.
+For more details about how to use MemBrain-stats, refer to our [User Instructions](docs/instructions_overview.md) document.
 
 ## Example Notebooks:
 
