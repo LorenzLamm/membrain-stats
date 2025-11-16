@@ -33,6 +33,7 @@ For more details about how to use MemBrain-stats, refer to our [User Instruction
     <img width="100%" src="https://github.com/user-attachments/assets/0a20a67f-868e-400c-b100-eed32f63659a">
 </p>
 
-We provide an example jupyter notebook highlighting what can be done with MemBrain-stats [here](./examples/NN_orientation_ribosomes_example.ipynb). This is a very advanced example, using outputs from template matching and analyzing ribosome chains (this example was also shown in our preprint).
+We provide an example jupyter notebook highlighting what can be done with MemBrain-stats [here](./examples/NN_orientation_ribosomes_example.ipynb). This is an advanced example, using outputs from template matching and analyzing ribosome chains (this example was also shown in our preprint).
+We did not wrap this functionality into a single command in MemBrain-stats due to its complexity and need for user input. But if you are interested in analyzing similar data, this notebook can serve as a guide.
 
 An example notebook (Colab tutorial) showcasing the pure functionalities of MemBrain-stats can be found here ([![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/CellArchLab/membrain_tutorial_scripts/blob/main/MemBrain_pick_example.ipynb)). Its workflow shows the generation of particle position predictions via MemBrain-pick, followed by analysis using MemBrain-stats.
