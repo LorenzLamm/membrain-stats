@@ -12,6 +12,11 @@ The goal of the package is to provide easy-to-use tools to analyze the distribut
 - (Geodesic) Ripley's statistics
 
 
+<p align="center" width="90%">
+    <img width="100%" src="https://github.com/user-attachments/assets/7cf780b8-c4ed-442c-84bb-e8afe0161cb6">
+</p>
+
+
 ## Publication: 
 Membrain-stats's functionalities are described in more detail in our [preprint](https://www.biorxiv.org/content/10.1101/2024.01.05.574336v2) [1].
 
@@ -19,14 +24,11 @@ Membrain-stats's functionalities are described in more detail in our [preprint](
 [1] Lamm, L., Zufferey, S., Righetto, R.D., Wietrzynski, W., Yamauchi, K.A., Burt, A., Liu, Y., Zhang, H., Martinez-Sanchez, A., Ziegler, S., Isensee, F., Schnabel, J.A., Engel, B.D., and Peng, T, 2024. MemBrain v2: an end-to-end tool for the analysis of membranes in cryo-electron tomography. bioRxiv, https://doi.org/10.1101/2024.01.05.574336
 ```
 
-<p align="center" width="90%">
-    <img width="100%" src="https://github.com/user-attachments/assets/7cf780b8-c4ed-442c-84bb-e8afe0161cb6">
-</p>
-
 ## Usage:
 For more details about how to use MemBrain-stats, refer to our [User Instructions](instructions_overview.md) document.
 
 ## Example Notebooks:
+
 <p align="center" width="70%">
     <img width="100%" src="https://github.com/user-attachments/assets/0a20a67f-868e-400c-b100-eed32f63659a">
 </p>
