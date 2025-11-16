@@ -34,4 +34,6 @@ More information can be found [here](ripley_statistics.md).
 ### Edge exclusion
 The edge exclusion functionality can be used to exclude the edges of the membrane from the analysis. It can be accessed as an optional argument to many of the functionalities. More information can be found [here](edge_exclusion.md).
 
+### Morphometrics Merging
+MemBrain-stats can merge outputs from the Surface Morphometrics Pipeline into the membrane containers produced by MemBrain-pick. This enables the joint analysis of particle positions with respect to different properties computed by the pipeline, like curvature or inter-membrane distance. More information can be found [here](morphometrics_merging.md).
 

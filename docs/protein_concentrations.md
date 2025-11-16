@@ -61,3 +61,54 @@ membrain_stats protein_concentration --in-folder ./data --out-folder ./stats/pro
 ```bash
 membrain_stats protein_concentration_wrt --in-folder ./data --out-folder ./stats/protein_concentration --pixel-size-multiplier 14.08 --exclude-edges True --edge-exclusion-width 50.0 --num-bins 25 --consider-classes 1 --consider-classes 2 --consider-classes 3 --with-respect-to-class 0 --geod-distance-method fast --distance-matrix-method euclidean
 ```
+
+
+## Protein Concentration With respect to Property
+This function computes the protein concentration with respect to a membrane property. For example morphometric properties can merged into the membrane container using the `property_from_morphometrics` function. (See [here](morphometrics_merging.md) for more details on how to merge morphometrics into the containers.)
+Hereby, the morphometrics property values are binned and the protein concentration is computed for each bin.
+
+It can be accessed via the command line interface (CLI) by running:
+```bash
+membrain_stats protein_concentration_wrt_property --in-folder <path/to/folder> --with-respect-to-property <property_name>
+```
+
+### More options
+- **`--in-folder`** (TEXT, required)  
+  Path to the directory containing MemBrain-pick output files (after possible morphometrics merging).
+  Can be a folder with `.h5` files.  
+- **`--out-folder`** (TEXT)  
+  Path to the folder where the computed concentration statistics will be stored.  
+  **Default:** `./stats/protein_concentration`
+- **`--pixel-size-multiplier`** (FLOAT)  
+  Scaling factor applied to mesh vertex coordinates if they are not in Ångström units.  
+  If provided, all mesh vertices are multiplied by this value.  
+  **Default:** None
+- **`--exclude-edges`** / **`--no-exclude-edges`**  
+  If enabled, edge regions of the membrane will be excluded from area calculations.  
+  **Default:** `--no-exclude-edges`
+- **`--edge-exclusion-width`** (FLOAT)  
+  Width (in Ångström) of the membrane edge zone to exclude when `--exclude-edges` is enabled.  
+  **Default:** `50.0`
+- **`--only-one-side`** / **`--no-only-one-side`**  
+  If enabled, only one side of the membrane is considered for area calculations.  
+  Works only when edge exclusion is disabled.  
+  **Default:** `--no-only-one-side`
+- **`--num-bins`** (INTEGER)  
+  Number of bins used to discretize the property values.  
+  **Default:** `25`
+- **`--min-property`** (FLOAT)  
+  Minimum property value to include in the analysis.  
+  If not provided, the minimum is inferred from the data.  
+  **Default:** None
+- **`--max-property`** (FLOAT)  
+  Maximum property value to include in the analysis.  
+  If not provided, the maximum is inferred from the data.  
+  **Default:** None
+- **`--with-respect-to-property`** (TEXT)  
+  Property name with respect to which protein concentration is computed  
+  (e.g., `scores`, curvature descriptors, morphometrics attributes).  
+  **Default:** `scores`
+- **`--below-and-above`** / **`--no-below-and-above`**  
+  If enabled, bins will also include all values below the minimum and above the maximum  
+  of the specified property range.  
+  **Default:** `--no-below-and-above`
