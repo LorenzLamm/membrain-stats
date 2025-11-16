@@ -47,6 +47,9 @@ def protein_concentration_wrt_property_folder(
     only_one_side: bool = False,
     with_respect_to_property: str = "scores",
     num_bins: int = 25,
+    min_property: float = None,
+    max_property: float = None,
+    below_and_above: bool = False,
 ):
 
     filenames = get_mesh_filenames(in_folder)
@@ -92,18 +95,23 @@ def protein_concentration_wrt_property_folder(
     if only_one_side:
         mesh_barycentric_areas /= 2
 
-    min_property, max_property = np.nanmin(mesh_properties), np.nanmax(mesh_properties)
+    if min_property is None:
+        min_property = np.nanmin(mesh_properties)
+    if max_property is None:
+        max_property = np.nanmax(mesh_properties)
     print(f"Property {with_respect_to_property} ranges from {min_property} to {max_property}")
 
     bins = np.linspace(min_property, max_property, num_bins)
+    if below_and_above:
+        bins = np.concatenate(([-np.inf], bins, [np.inf]))
     hist = np.histogram(property_per_point, bins=bins)[0]
     y_data = []
     for num_bin, protein_numbers in enumerate(hist):
         bin_lower = bins[num_bin]
         bin_upper = bins[num_bin + 1]
         area_mask = (mesh_properties >= bin_lower) & (mesh_properties < bin_upper)
-        print(f"Bin {num_bin}: {bin_lower} - {bin_upper}, area: {np.sum(mesh_barycentric_areas[area_mask])} nm^2, proteins: {protein_numbers}")
         y_data.append(protein_numbers / np.sum(mesh_barycentric_areas[area_mask]))
+        print(f"Bin {num_bin}: {bin_lower} - {bin_upper}, area: {np.sum(mesh_barycentric_areas[area_mask])} nm^2, proteins: {protein_numbers}, concentration: {protein_numbers / np.sum(mesh_barycentric_areas[area_mask])}")
     
 
     plt.figure()

@@ -37,11 +37,20 @@ def property_from_morphometrics(
     None
         The function saves the meshes with assigned properties to the specified output folder.
     """
+    is_file = os.path.isfile(h5_folder)
+    if is_file:
+        h5_filenames = [h5_folder]
+    else:
+        h5_filenames = [os.path.join(h5_folder, f) for f in os.listdir(h5_folder) if f.endswith('.h5')]
 
-    for filename in os.listdir(h5_folder):
+    for filename in h5_filenames:
         if filename.endswith(".h5"):
-            mesh_path = os.path.join(h5_folder, filename)
-            morphometrics_file = find_paired_morphometrics_file(filename, morphometrics_folder)
+            mesh_path = filename
+            filename = os.path.basename(filename)
+            if not os.path.isfile(morphometrics_folder):
+                morphometrics_file = find_paired_morphometrics_file(filename, morphometrics_folder)
+            else:
+                morphometrics_file = morphometrics_folder
             if morphometrics_file is None:
                 print(f"No paired morphometrics file found for {filename}. Skipping.")
                 continue
@@ -60,16 +69,25 @@ def property_from_morphometrics(
             distances, indices = nbrs.kneighbors(mesh['points'])
             distances, indices = distances.flatten(), indices.flatten()
             assignment_mask = distances <= max_distance_for_assignment
+
+            min_distances = np.ones_like(distances) * 1e6
             print(f"Nearest neighbor assignment done. We found {np.sum(~assignment_mask)} points without close morphometrics (>{max_distance_for_assignment} Angstrom). These points will get nan values for all properties.")
             skip_columns = ['index', 'xyz_x', 'xyz_y', 'xyz_z', 'area']
             # assign properties to mesh points based on nearest neighbor
             for i, col in enumerate(header):
                 if col in skip_columns:
                     continue  # skip columns
+                    
                 property_values = morphometrics_data[indices, i].flatten()
+                if col.endswith('_dist'):
+                    min_distances = np.minimum(min_distances, property_values)
                 property_values[~assignment_mask] = np.nan  # assign nan to points without close morphometrics
                 mesh[col] = property_values
                 print(f"Assigned property '{col}' to mesh.")
+
+            min_distances[~assignment_mask] = np.nan
+            mesh['min_morphometrics_distance'] = min_distances
+
 
             out_path = os.path.join(out_folder, filename)
             os.makedirs(out_folder, exist_ok=True)
@@ -80,3 +98,4 @@ def property_from_morphometrics(
                 **{k: v for k, v in mesh.items() if k not in ['points', 'faces']}
             )
             print(f"Saved mesh with assigned properties to {out_path}")
+
