@@ -1,2 +1,2 @@
 """Empty init."""
-from .mesh_conversion_cli import cli  # noqa: F401
+from .membrain_stats_cli import cli  # noqa: F401

@@ -29,20 +29,18 @@ PKWARGS = OPTION_PROMPT_KWARGS
 @cli.callback()
 def callback():
     """
-    MemBrain-pick's data conversion / mesh projection module.
+    MemBrain-stats' command line interace  for accessing all functionalities.
 
     You can choose between the different options listed below.
     To see the help for a specific command, run:
 
-    membrain-pick --help
+    membrain_stats --help
 
     -------
 
     Example:
     -------
-    membrain-pick process-folder --mb-folder <path-to-your-folder> --tomo-path <path-to-tomo>
-        --output-folder <path-to-store-meshes>
-
+    membrain_stats protein_concentation --in-folder <path-to-your-h5-folder> 
     -------
     """
 
