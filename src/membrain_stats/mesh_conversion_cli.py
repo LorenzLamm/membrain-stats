@@ -193,7 +193,7 @@ def protein_concentration_wrt(
 def protein_concentration_wrt_property(
     in_folder: str = Option(  # noqa: B008
         ...,
-        help="Path to the directory containing either .h5 files or .obj and .star files",
+        help="Path to the directory containing either .h5 files.",
         **PKWARGS,
     ),
     out_folder: str = Option(  # noqa: B008
@@ -266,12 +266,12 @@ def protein_concentration_wrt_property(
 def property_from_morphometrics(
     h5_path: str = Option(  # noqa: B008
         ...,
-        help="Path to the directory containing either .h5 files or .obj and .star files. Can also be a single .h5 file.",
+        help="Path to the MemBrain-pick output container. Can also be a directory, in this case names of containers and morphometrics csvs have to match exactly (e.g. Tomo1_M5.h5 vs Tomo1_M5.csv)",
         **PKWARGS,
     ),
     morphometrics_path: str = Option(  # noqa: B008
         ...,
-        help="Path to the folder where computed stats should be stored. Can also be a single .csv file.",
+        help="Path to the single `.csv` file containing the Surface Morphometrics outputs. Can also be a directory, in this case names of containers and morphometrics csvs have to match exactly (e.g. Tomo1_M5.h5 vs Tomo1_M5.csv)",
         **PKWARGS,
     ),
     out_folder: str = Option(  # noqa: B008
