@@ -156,6 +156,7 @@ def get_wrt_property_inputs(
         mesh_dict["properties"][with_respect_to_property][nn_idcs]
         for mesh_dict, nn_idcs in zip(mesh_dicts, nn_idcs_per_position)
     ]
+    property_per_point = flatten_and_concatenate(property_per_point)
 
 
     # Compute the barycentric areas

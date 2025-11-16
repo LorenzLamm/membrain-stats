@@ -218,9 +218,19 @@ def protein_concentration_wrt_property(
     num_bins: int = Option(  # noqa: B008
         25, help="Number of bins to use for the histogram."
     ),
+    min_property: float = Option(  # noqa: B008
+        None, help="Minimum property value to consider."
+    ),
+    max_property: float = Option(  # noqa: B008
+        None, help="Maximum property value to consider."
+    ),
     with_respect_to_property: str = Option(  # noqa: B008
         "scores", help="Property with respect to which protein concentration should be computed."
     ),
+    below_and_above: bool = Option(  # noqa: B008
+        False,
+        help="If True, bins will include all values below the minimum and above the maximum specified properties.",
+    )
 ):
     """Compute protein concentrations with respect to distance to a specific point class.
 
@@ -246,19 +256,22 @@ def protein_concentration_wrt_property(
         only_one_side=only_one_side,
         with_respect_to_property=with_respect_to_property,
         num_bins=num_bins,
+        min_property=min_property,
+        max_property=max_property,
+        below_and_above=below_and_above
     )
 
 
 @cli.command(name="property_from_morphometrics", no_args_is_help=True)
 def property_from_morphometrics(
-    h5_folder: str = Option(  # noqa: B008
+    h5_path: str = Option(  # noqa: B008
         ...,
-        help="Path to the directory containing either .h5 files or .obj and .star files",
+        help="Path to the directory containing either .h5 files or .obj and .star files. Can also be a single .h5 file.",
         **PKWARGS,
     ),
-    morphometrics_folder: str = Option(  # noqa: B008
+    morphometrics_path: str = Option(  # noqa: B008
         ...,
-        help="Path to the folder where computed stats should be stored.",
+        help="Path to the folder where computed stats should be stored. Can also be a single .csv file.",
         **PKWARGS,
     ),
     out_folder: str = Option(  # noqa: B008
@@ -290,8 +303,8 @@ def property_from_morphometrics(
 
 
     property_from_morphometrics(
-        h5_folder=h5_folder,
-        morphometrics_folder=morphometrics_folder,
+        h5_folder=h5_path,
+        morphometrics_folder=morphometrics_path,
         out_folder=out_folder,
         pixel_size_multiplier=pixel_size_multiplier,
         max_distance_for_assignment=max_distance_for_assignment,
