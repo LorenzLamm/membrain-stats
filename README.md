@@ -1,7 +1,7 @@
 # MemBrain-Stats
 
 Membrain-Stats<sup>1</sup> is a Python project developed by the [CellArchLab](https://www.cellarchlab.com/) for computing membrane protein statistics in 3D for cryo-electron tomography (cryo-ET). 
-It is part of the larger MemBrain package, which also includes MemBrain-pick for membrane protein detection and MemBrain-seg for membrane segmentation. The full MemBrain package can be found [here](https://github.com/CellArchLab/MemBrain-v2).
+It is part of the larger [MemBrain v2 package](https://github.com/CellArchLab/MemBrain-v2), which also includes MemBrain-pick for membrane protein detection and MemBrain-seg for membrane segmentation.
 
 The goal of the package is to provide easy-to-use tools to analyze the distribution of membrane proteins in relation to the underlying membrane geometry. To this end, we provide the following functionalities:
 - Protein concentration computation
